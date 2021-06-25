@@ -16,6 +16,8 @@ Este repositotorio contiene las instrucciones y herramientas para poder realizar
 - `OpenJDK-8`
 - `Git`
 - Directorio `/home`
+- `npm`
+- `nodejs`
 
 
 Dentro del directorio de `/home` se ecuentran los siguiente repos clonados: 
@@ -30,7 +32,7 @@ Para poder ejecutar este proyecto es requerido la instalación de al menos:
 - [Docker]()
 - [VSCode]()
 
-Así mismo crear un cuenta de [IBM Cloud]().
+Así mismo crear un cuenta de [IBM Cloud](https://cloud.ibm.com).
 ## Instalación 
 
 Puedes utilizar la imagen de docker hub `hjosef13/cnb-tools` en su forma más básica:
@@ -75,3 +77,9 @@ git clone https://github.com/ibm-cloud-academy/LightBlueCompute
 git clone https://github.com/IBM/container-service-getting-started-wt.git
 ```
 
+## Documentation
+
+- [Docker Volumes](https://docs.docker.com/storage/volumes/)
+- [VI Cheatsheet](https://devhints.io/vim)
+
+  
