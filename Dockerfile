@@ -9,9 +9,9 @@ RUN apt-get update && apt-get -y install curl && apt-get -y install git && \
      apt-get -y install nodejs && apt-get -y install npm &&\  
      apt-get -y install openjdk-8-jdk && \ 
      echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> .bashrc && echo "export PATH=$PATH:$JAVA_HOME/bin" >> .bashrc
-RUN . ~/.bashrc
-RUN curl -fsSL https://clis.cloud.ibm.com/install/linux > ibmcloudcli.sh && chmod +x ibmcloudcli.sh && ./ibmcloudcli.sh
+RUN curl -sL https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
 RUN echo 'alias ic="ibmcloud"' >> .bashrc
+RUN . ~/.bashrc
 WORKDIR /home
 RUN git clone https://github.com/IBM/container-service-getting-started-wt.git && \
     git clone https://github.com/ibm-cloud-academy/LightBlueCompute && \
