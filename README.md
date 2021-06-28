@@ -64,8 +64,8 @@ Esta alternativa no es la más recomendada en cuanto a performan. Sin embargo pa
 
 *1. Crea un directorio en tu equipo el cual deseas conectar(bind) al sistema de archivos del contenedor:*
 ```bash 
-mkdir cloud-bootcamp;
-cd cloud-bootcamp;
+mkdir cloud-bootcamp; #para sistemas UNIX/LINUX
+
 ```
 *2. Ejecuta el contenedor unido a nuestro dircetorio*
 ```bash 
