@@ -78,7 +78,19 @@ git clone https://github.com/IBM/container-service-getting-started-wt.git
 ```bash 
 ibmcloud login -r us-south
 ```
-
+### Parte 2: Salí del contenedor como vuelvo a entrar?
+*1. Asegúrate que este corriendo el contenedor con el siguiente comando*
+```bash 
+docker ps
+```
+en caso que no esté corriendo arranca con:
+```bash 
+docker start cnbtools
+```
+*2 Ingresa de nuevo al comando*
+```bash 
+docker exec -it cnbtools bash
+```
 ## Documentation
 
 - [Docker Volumes](https://docs.docker.com/storage/volumes/)
