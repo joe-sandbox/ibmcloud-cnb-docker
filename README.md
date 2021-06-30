@@ -65,13 +65,20 @@ Esta alternativa no es la más recomendada en cuanto a performan. Sin embargo pa
 *1. Crea un directorio en tu equipo el cual deseas conectar(bind) al sistema de archivos del contenedor:*
 ```bash 
 mkdir cloud-bootcamp; #para sistemas UNIX/LINUX
-
 ```
-*2. Ejecuta el contenedor unido a nuestro dircetorio*
+*2. Ejecuta VSCode apuntando al directorio de cloud-bootcamp*
+```bash 
+code cloud-bootcamp;
+```
+*3. DENTRO de VSCODE en una terminal nueva, ejecuta el contenedor unido a nuestro dircetorio*
 ```bash 
 docker run -it --name cnbtools --mount type=bind,source="$(pwd)/cloud-bootcamp",target=/cloud-bootcamp hjosef13/cnb-tools
 ```
-*3. Clona los repositorios*
+*3. Una vez dentro del contenedor(en la terminal), ejecuta el siguiente comando:*
+```bash 
+cd /cloud-bootcamp
+```
+*3. Clona los repositorios (Solo la primera vez)*
 ```bash 
 git clone https://github.com/ibm-cloud-academy/LightBlueCompute
 git clone https://github.com/IBM/container-service-getting-started-wt.git
