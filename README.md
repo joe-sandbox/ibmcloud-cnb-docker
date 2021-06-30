@@ -49,6 +49,7 @@ Esta opción es la más moderna y se recomiena para cuando se tenga la necesidad
 *1. Crea un directorio en tu equipo el cual deseas conectar(bind) al sistema de archivos del contenedor:*
 ```bash 
 mkdir cloud-bootcamp; #para sistemas UNIX/LINUX
+cd cloud-bootcamp;
 ```
 *2. Ejecuta VSCode apuntando al directorio de cloud-bootcamp*
 ```bash 
@@ -61,13 +62,6 @@ code cloud-bootcamp;
 docker volume create cnb-bootcamp
 ```
 *5.  Dentro de la terminal, ejecuta el contenedor unido a nuestro dircetorio y al volumen previamente creado*
-```bash 
-docker run -it --name cnbtools \ 
-       --mount type=bind,source="$(pwd)/cloud-bootcamp",target=/cloud-bootcamp \
-       --mount source=cnb-bootcamp,target=/home \
-       hjosef13/cnb-tools
-```
-o si lo prefieres en una sola línea:
 ```bash 
 docker run -it --name cnbtools --mount type=bind,source="$(pwd)/cloud-bootcamp",target=/cloud-bootcamp --mount source=cnb-bootcamp,target=/home hjosef13/cnb-tools
 ```
