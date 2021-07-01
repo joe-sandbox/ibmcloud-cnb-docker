@@ -87,7 +87,7 @@ en caso que no esté corriendo arranca con:
 ```bash 
 docker start cnbtools
 ```
-*2 Ingresa de nuevo al comando*
+*2 Ingresa de nuevo al contenedor*
 ```bash 
 docker exec -it cnbtools bash
 ```
