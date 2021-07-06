@@ -110,8 +110,11 @@ ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/customer-${ID} .
 cd ../kubernetes
 ```
 6. Editar el archivo customer.yml
+
 `ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+
 `kubectl get secrets` (para ver el nombre del binding y reemplazarlo en la `línea 32`).
+
 7. Desplegar el microservicio en Kubernetes.
 ```bash
 kubectl create -f customer.yml
@@ -129,4 +132,154 @@ curl  -i -X POST -H "Content-Type: application/json" -H "Accept: application/jso
 curl "http://${WORKER_IP}:30110/micro/customer/search?username=foo"
 ```
 ## Lab 3. Mysql
-Coming soon... 
+1. Cambiar de directorio
+```bash
+cd ../../mysql
+```
+2. Desplegar al container registry
+```bash
+ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/mysql-${NUM} .
+```
+3. Cambiar de directorio
+```bash
+cd kubernetes
+```
+4. Editar el archivo customer.yml
+`ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+
+5. Desplegar el microservicio en Kubernetes.
+```bash
+kubectl create -f mysql.yml
+```
+6. Imprimir la IP y el nombre del pod para usarlos posteriormente
+```bash
+kubectl get pods
+echo $WORKER_IP
+```
+7. Entrar al pod
+```bash
+kubectl exec -it <POD_NAME> -- bash
+```
+8. Correr el script que inserta los registros en la BD.
+```bash
+bash /load-data.sh
+```
+9. Autenticarse para corroborar si se ingresaron los datos
+```bash
+mysql -udbuser -pPass4dbUs3R -h<worker_publicIP> -P30006
+
+select count(*) from inventorydb.items;
+
+quit
+
+exit
+```
+
+## Lab 4. Microservicio Catalog
+1. Cambiar de directorio
+```bash
+cd ../../catalog
+```
+2. Editar el archivo src/main/resources/application.yml 
+Editar la `WORKING_IP` en la `línea 17`.
+
+3. Build de la app Catalog
+```bash
+./gradlew build -x test 
+./gradlew docker
+```
+
+En caso de error:
+```bash
+curl https://bootcamp-gradle-build.mybluemix.net/ms/catalog --output docker/app.jar
+```
+
+4. Cambiar de directorio
+```bash
+cd docker
+```
+5. Desplegar al container registry
+```bash
+ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/catalog-${ID} .
+```
+6. Cambiar de directorio
+```bash
+cd ../kubernetes
+```
+7. Editar el archivo catalog.yml
+```bash
+`ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+```
+8. Desplegar el microservicio en Kubernetes.
+```bash
+kubectl create -f catalog.yml
+```
+9. Probar
+```bash
+curl "http://$WORKER_IP:30111/micro/items/13401"
+```
+
+## Lab 5. Microservicio Web
+1. Cambiar de directorio
+```bash
+cd ../../web-app-lite/config
+```
+2. Editar el archivo default.json
+Remplazar el host de catalogo, cambiar `cataloghost` por `catalog-lightblue-service:8081` en la `línea 15`.
+Remplazar el base_path de catalogo, cambiar `/api` por `/micro` en la `línea 16`.
+
+Remplazar el host de customer, cambiar `customerhost` por `customer-lightblue-service:8080` en la `línea 30`.
+Remplazar el base_path de catalogo, cambiar `/api` por `/micro` en la `línea 31`.
+
+3. Cambiar de directorio
+```bash
+cd ../
+```
+4. Desplegar al container registry
+```bash
+ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/webapp-${ID} .
+```
+5. Cambiar de directorio
+```bash
+cd kubernetes
+```
+6. Editar el archivo webapp.yml
+```bash
+`ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+```
+7. Desplegar el microservicio en Kubernetes.
+```bash
+kubectl create -f webapp.yml
+```
+8. Probar en el navegador
+```bash
+echo "http://$WORKER_IP:30130/"
+```
+
+## TEARDOWN
+```bash
+ibmcloud ks cluster service unbind --cluster ${CLUSTER_NAME} --namespace default --service ${CLOUDANT_GUID}  
+kubectl delete --all deployment
+kubectl delete --all service
+cd ..
+rm -rf LightBlueCompute
+
+
+export CLOUDANT_CREDS_ID="$(ibmcloud resource service-keys --output json | jq -r '.[] | select(.name=="cloudant-creds").id')"
+echo $CLOUDANT_CREDS_ID
+ibmcloud resource service-key-delete ${CLOUDANT_CREDS_ID} -f
+ibmcloud resource service-instance-delete ${CLOUDANT_ID}  -f
+
+
+git clone https://github.com/ibm-cloud-academy/LightBlueCompute
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/catalog-${ID}
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/customer-${ID}
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/mysql-${ID}
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/webapp-${ID}
+ibmcloud cr images --restrict ${NAME_SPACE}
+
+
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-catalog-kube
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-customer-kube
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-mysql-kube
+ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-web-kube
