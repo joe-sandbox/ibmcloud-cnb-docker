@@ -147,7 +147,7 @@ cd ../../mysql
 ```
 2. Desplegar al container registry
 ```bash
-ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/mysql-${NUM} .
+ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/mysql-${ID} .
 ```
 3. Cambiar de directorio
 ```bash
