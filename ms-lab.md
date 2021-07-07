@@ -53,7 +53,7 @@ export NAME_SPACE=
 ```
 ```
 export CLOUDANT_SVC_NAME=cloudantdb-${ID}
-
+```
 ```
 echo $ID
 echo $CLUSTER_NAME
