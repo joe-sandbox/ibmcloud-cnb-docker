@@ -218,7 +218,7 @@ kubectl create -f catalog.yml
 ```
 9. Probar
 ```bash
-curl "http://$WORKER_IP:30111/micro/items/13401"
+curl "http://${WORKER_IP}:30111/micro/items/13401"
 ```
 ## Lab 5. Microservicio Web
 1. Cambiar de directorio
