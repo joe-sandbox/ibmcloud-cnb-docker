@@ -203,15 +203,16 @@ cd docker
 ```bash
 ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/catalog-${ID} .
 ```
+```bash
+#(para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+ibmcloud cr images --restrict ${NAME_SPACE} 
+```
 6. Cambiar de directorio
 ```bash
 cd ../kubernetes
 ```
 7. Editar el archivo catalog.yml
-```bash
-#(para listar todas las imagenes y remplazar por la propia en la `línea 18`).
-ibmcloud cr images --restrict ${NAME_SPACE} 
-```
+
 8. Desplegar el microservicio en Kubernetes.
 ```bash
 kubectl create -f catalog.yml
@@ -250,7 +251,7 @@ cd kubernetes
 6. Editar el archivo webapp.yml
 ```bash
 #(para listar todas las imagenes y remplazar por la propia en la `línea 18`).
-ibmcloud cr images --restrict ${NAME_SPACE} ` 
+ibmcloud cr images --restrict ${NAME_SPACE} 
 ```
 7. Desplegar el microservicio en Kubernetes.
 ```bash
