@@ -37,11 +37,23 @@ ibmcloud target -g cnb-telmex-mx-rg
 ibmcloud target
 ```
 ### Requisitos 3: Ingresar las variables de entorno
-- `export ID= # Tu identificador del curso, suele ser un número del 1 al 20.
-- `export CLUSTER_NAME= # se te asigna 
-- `export NAME_SPACE= # te lo asinga el instructor
+- `export ID=` # Tu identificador del curso, suele ser un número del 1 al 20.
+- `export CLUSTER_NAME=` # se te asigna 
+- `export NAME_SPACE= `# te lo asinga el instructor
 - `export CLOUDANT_SVC_NAME=cloudantdb-${ID}`  
 Confirmar los valores correctos de las variables de entorno
+```
+export ID=
+```
+```
+export CLUSTER_NAME=
+```
+```
+export NAME_SPACE=
+```
+```
+export CLOUDANT_SVC_NAME=cloudantdb-${ID}
+
 ```
 echo $ID
 echo $CLUSTER_NAME
