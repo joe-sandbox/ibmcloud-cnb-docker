@@ -122,7 +122,7 @@ ibmcloud cr build --tag us.icr.io/${NAME_SPACE}/customer-${ID} .
 cd ../kubernetes
 ```
 6. Editar el archivo customer.yml
-`ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+`ibmcloud cr images --restrict ${NAME_SPACE} ` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
 `kubectl get secrets` (para ver el nombre del binding y reemplazarlo en la `línea 32`).
 7. Desplegar el microservicio en Kubernetes.
 ```bash
@@ -209,7 +209,8 @@ cd ../kubernetes
 ```
 7. Editar el archivo catalog.yml
 ```bash
-`ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+#(para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+ibmcloud cr images --restrict ${NAME_SPACE} 
 ```
 8. Desplegar el microservicio en Kubernetes.
 ```bash
@@ -243,7 +244,8 @@ cd kubernetes
 ```
 6. Editar el archivo webapp.yml
 ```bash
-`ibmcloud cr images` (para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+#(para listar todas las imagenes y remplazar por la propia en la `línea 18`).
+ibmcloud cr images --restrict ${NAME_SPACE} ` 
 ```
 7. Desplegar el microservicio en Kubernetes.
 ```bash
@@ -255,22 +257,9 @@ echo "http://$WORKER_IP:30130/"
 ```
 ## TEARDOWN
 ```bash
-ibmcloud ks cluster service unbind --cluster ${CLUSTER_NAME} --namespace default --service ${CLOUDANT_GUID}  
-kubectl delete --all deployment
-kubectl delete --all service
-cd ..
-rm -rf LightBlueCompute
-export CLOUDANT_CREDS_ID="$(ibmcloud resource service-keys --output json | jq -r '.[] | select(.name=="cloudant-creds").id')"
-echo $CLOUDANT_CREDS_ID
-ibmcloud resource service-key-delete ${CLOUDANT_CREDS_ID} -f
-ibmcloud resource service-instance-delete ${CLOUDANT_ID}  -f
-git clone https://github.com/ibm-cloud-academy/LightBlueCompute
+kubectl delete deploy customer-lightblue-deployment catalog-lightblue-deployment  webapp-lightblue-deployment
+kubectl delete svc customer-lightblue-service catalog-lightblue-service webapp-lightblue-service
 ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/catalog-${ID}
 ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/customer-${ID}
-ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/mysql-${ID}
 ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/webapp-${ID}
 ibmcloud cr images --restrict ${NAME_SPACE}
-ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-catalog-kube
-ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-customer-kube
-ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-mysql-kube
-ibmcloud cr image-rm us.icr.io/${NAME_SPACE}/lightblue-web-kube
