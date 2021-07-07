@@ -220,6 +220,11 @@ kubectl create -f catalog.yml
 ```bash
 curl "http://${WORKER_IP}:30111/micro/items/13401"
 ```
+
+La respuesta debería ser algo así:
+```
+{"id":13401,"name":"Dayton Meat Chopper","description":"Punched-card tabulating machines and time clocks were not the only products offered by the young IBM. Seen here in 1930, manufacturing employees of IBM's Dayton Scale Company are assembling Dayton Safety Electric Meat Choppers. These devices, which won the Gold Medal at the 1926 Sesquicentennial International Exposition in Philadelphia, were produced in both counter base and pedestal styles (5000 and 6000 series, respectively). They included one-quarter horsepower models, one-third horsepower machines (Styles 5113, 6113F and 6213F), one-half horsepower types (Styles 5117, 6117F and 6217F) and one horsepower choppers (Styles 5128, 6128F and 6228F). Prices in 1926 varied from admin80 to bluemix-sandbox-dal-9-portal.5.dblayer.com75. Three years after this photograph was taken, the Dayton Scale Company became an IBM division, and was sold to the Hobart Manufacturing Company in 1934.","price":4599,"img":"meat-chopper.jpg","stock":1000,"imgAlt":"Dayton Meat Chopper"}
+
 ## Lab 5. Microservicio Web
 1. Cambiar de directorio
 ```bash
